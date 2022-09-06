@@ -6,41 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.*;
-import java.util.List;
 
 import static com.simis.HibernateRunner.getTableRowCount;
 
 public class Game {
-    List<String> stringDB = new ArrayList<>();
-
-    {
-        stringDB.add("cat");
-        stringDB.add("dog");
-        stringDB.add("meat");
-        stringDB.add("star");
-        stringDB.add("cookie");
-        stringDB.add("yellow");
-        stringDB.add("rhino");
-        stringDB.add("door");
-        stringDB.add("fork");
-        stringDB.add("repeat");
-        stringDB.add("stalker");
-        stringDB.add("roomer");
-        stringDB.add("pixel");
-        stringDB.add("butter");
-        stringDB.add("slum");
-        stringDB.add("beaver");
-        stringDB.add("river");
-        stringDB.add("telescope");
-    }
-
     private String word;
     private int guessedLettersCount;
     private int[] guessedChars;
-
-    public String getNewWord() {
-        return stringDB.get((int) (Math.random() * stringDB.size()));
-    }
 
     public String createHiddenWord() {
         guessedLettersCount = 0;
@@ -68,7 +40,7 @@ public class Game {
         ) {
             session.beginTransaction();
             int randomId = (int) (Math.random() * getTableRowCount(Word.class));
-            word = session.get(Word.class, randomId).getName();
+            word = session.get(Word.class, randomId).getName().strip();
             session.getTransaction().commit();
         }
         // take new word from array ()
